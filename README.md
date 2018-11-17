@@ -23,7 +23,7 @@ The original results of the paper are tuned and obtained using the NER model wri
 
 To train bilingual word embeddings, we use [MUSE](https://github.com/facebookresearch/MUSE).
 
-After installing MUSE, to get a mapping (e.g., en-es, identical character strings), first set ``VALIDATION_METRIC = 'mean_cosine-csls_knn_10-S2T-10000'`` in ``supervised.py``, and then run:
+After installing MUSE, to get a mapping (e.g., en-es, identical character strings), first set ``VALIDATION_METRIC = 'mean_cosine-csls_knn_10-S2T-10000'`` in ``supervised.py``, and then run, for instance:
 
 ``python supervised.py --src_lang en --tgt_lang es --src_emb data/wiki.en.vec --tgt_emb data/wiki.es.vec  --n_refinement 3 --dico_train identical_char --max_vocab 100000``
 
