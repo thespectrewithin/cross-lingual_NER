@@ -35,7 +35,7 @@ To create a word-to-word translation file, run:
 
 Note, if your embedding file contains a 1st line that specifies the size and the dimension of the embedding file, such as ``2519370 300``, remove it before you run this script (include it though when running MUSE).
 
-# Data Format
+## Data Format
 
 We use IOB2 tagging scheme, and NER data in the following format:
 
