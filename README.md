@@ -53,8 +53,8 @@ Simply run:
 
 For the Lasagne/Theano implementation, to reproduce our results, run:
 
-``run_lasagne_ncrf.sh``
+``./run_lasagne_ncrf.sh``
 
 For the PyTorch implementation, run:
 
-``run_pytorch_ncrf.sh``
+``./run_pytorch_ncrf.sh``
