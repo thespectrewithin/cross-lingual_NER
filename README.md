@@ -33,7 +33,7 @@ To create a word-to-word translation file, run:
 
 ``./run_load_muse.sh``
 
-Note, if your embedding file contains a 1st line that specifies the size and the dimension of the embedding, such as ``2519370 300``, remove it before you run this script (include it though when running MUSE).
+Note, if your embedding file contains a 1st line that specifies the size and the dimension of the embedding file, such as ``2519370 300``, remove it before you run this script (include it though when running MUSE).
 
 # Data Format
 
@@ -51,7 +51,7 @@ Simply run:
 
 ## Train Cross-Lingual NER Model
 
-For the Lasagne/Theano implementation, run:
+For the Lasagne/Theano implementation, to reproduce our results, run:
 
 ``run_lasagne_ncrf.sh``
 
