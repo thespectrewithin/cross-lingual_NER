@@ -10,11 +10,14 @@ This is the code we used in our paper
 ## Requirements
 
 Python 2.7 or 3.6
+
 PyTorch 0.3.0 or 0.4.0
+
 Theano 1.0
+
 Lasagne 0.2
 
-The original results on the paper are tuned and obtained using the NER model written in Theano/Lasagne. Everything else is in PyTorch. We also provide a PyTorch implementation of the NER model, which might produce slightly worse results, due to implementation differences between the library such as different weight initialization.
+The original results of the paper are tuned and obtained using the NER model written in Theano/Lasagne. Everything else is in PyTorch. We also provide a PyTorch implementation of the NER model, which might produce slightly worse results, due to implementation differences between the library such as different weight initialization.
 
 ## Train Bilingual Word Embeddings
 
