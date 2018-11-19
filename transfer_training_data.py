@@ -11,14 +11,15 @@ args = parser.parse_args()
 
 word_dict = {}
 for line in open(args.word_translation):
-    l = line.strip().split()
-    word_dict[l[0]] = l[1].lower()
+    src, tgt = line.rstrip('\n').split(' ', 1)
+    word_dict[src] = tgt.lower()
 
 output = open(args.output, 'w')
 
 for line in open(args.training_data, 'r'):
     if len(line.strip()) > 0:
         l = line.strip().split()
+
         word = l[0]
         if args.same_script:
             if l[1][2:] == 'PER':
