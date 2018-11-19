@@ -11,7 +11,7 @@ This is the code we used in our paper
 
 Python 2.7 or 3.6
 
-PyTorch 0.3.0 or 0.4.0
+PyTorch 0.3.0
 
 Theano 1.0
 
@@ -35,7 +35,7 @@ To create a word-to-word translation file, run:
 
 Note, if your embedding file contains a 1st line that specifies the size and the dimension of the embedding file, such as ``2519370 300``, remove it before you run this script (include it though when running MUSE).
 
-# Data Format
+## Data Format
 
 We use IOB2 tagging scheme, and NER data in the following format:
 
@@ -53,8 +53,8 @@ Simply run:
 
 For the Lasagne/Theano implementation, to reproduce our results, run:
 
-``run_lasagne_ncrf.sh``
+``./run_lasagne_ncrf.sh``
 
 For the PyTorch implementation, run:
 
-``run_pytorch_ncrf.sh``
+``./run_pytorch_ncrf.sh``
