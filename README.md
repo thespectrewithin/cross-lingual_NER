@@ -11,7 +11,7 @@ This is the code we used in our paper
 
 Python 2.7 or 3.6
 
-PyTorch 0.3.0 or 0.4.0
+PyTorch 0.3.0
 
 Theano 1.0
 
