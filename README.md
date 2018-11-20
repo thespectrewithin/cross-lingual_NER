@@ -17,7 +17,7 @@ Theano 1.0
 
 Lasagne 0.2
 
-The original results of the paper are tuned and obtained using the NER model written in Theano/Lasagne. Everything else is in PyTorch. We also provide a PyTorch implementation of the NER model, which might produce slightly worse results, due to implementation differences between the library such as different weight initialization schemes.
+The original results of the paper are tuned and obtained using the NER model written in Theano/Lasagne. Everything else is in PyTorch. We also provide a PyTorch implementation of the NER model, which might produce slightly worse results, due to implementation differences between the libraries such as different weight initialization schemes.
 
 ## Train Bilingual Word Embeddings
 
