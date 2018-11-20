@@ -46,9 +46,9 @@ def create_word_index(path, vocab_size, wembed_size, pad=False):
     
     for line in open(path):
         if num < vocab_size:
-            l = line.strip().split()
-            word_dict[l[0]] = len(word_dict)
-            vec = np.array([float(i) for i in l[1:]], dtype = 'float32')
+            word, vec = line.rstrip().split(' ', 1)
+            word_dict[word] = len(word_dict)
+            vec = np.array(vec.split(), dtype = 'float32')
             word_vector.append(vec)
         num += 1
 
