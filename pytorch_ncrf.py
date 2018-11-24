@@ -60,6 +60,8 @@ class lstmcrf(nn.Module):
         if pretrained is not None:
             self.word_embed.weight.data.copy_(torch.from_numpy(pretrained))
 
+        self.reset_parameters()
+
     def forward(self, words, chars, word_length, char_length, target):
 
         char_input = chars.view(-1, chars.size(2))
@@ -129,6 +131,23 @@ class lstmcrf(nn.Module):
             return crf_loss, predict
         else:
             return self.read_out(word_output.view(-1, word_output.size(2)))
+
+    def reset_parameters(self):
+
+        for param in self.char_embed.parameters():
+            nn.init.normal(param, mean=0, std=0.01)
+
+        for name, param in self.char_lstm.named_parameters():
+            if 'bias' in name:
+                nn.init.constant_(param, 0.)
+            elif 'weight' in name:
+                nn.init.normal(param, mean=0, std=0.1)
+
+        for name, param in self.word_lstm.named_parameters():
+            if 'bias' in name:
+                nn.init.constant(param, 0.)
+            elif 'weight' in name:
+                nn.init.normal(param, mean=0, std=0.1)
 
     def get_trainable_parameters(self):
         if not self.finetune:
@@ -257,6 +276,7 @@ def main():
 
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
+    np.random.seed(seed)
 
     print('loading data...')
 
@@ -322,8 +342,8 @@ def main():
                 pred = scores.max(1)[1].data
 
             gold = label_input.contiguous().view(-1)
-            num_tokens = gold.data.ne(Constants.PAD).sum()
-            correct = pred.eq(gold.data).masked_select(gold.ne(Constants.PAD).data).sum()
+            num_tokens = gold.data.ne(Constants.PAD).float().sum()
+            correct = pred.eq(gold.data).masked_select(gold.ne(Constants.PAD).data).float().sum()
 
             test_corr += correct
             test_total += num_tokens
@@ -335,7 +355,10 @@ def main():
                 test_preds.append([LABEL_INDEX[j] for j in pred[i][:word_length_input.data[i]]])
 
         test_acc = test_corr * 100.0 / test_total
+
         test_p, test_r, test_f = evaluate_ner(test_preds, test_Y)
+
+        model.train()
 
         return test_acc, test_p, test_r, test_f, test_preds
 
@@ -372,8 +395,8 @@ def main():
                 pred = scores.max(1)[1].data
                 loss = cross_entropy(scores, gold)
 
-            num_tokens = gold.data.ne(Constants.PAD).sum()
-            correct = pred.eq(gold.data).masked_select(gold.ne(Constants.PAD).data).sum()
+            num_tokens = gold.data.ne(Constants.PAD).float().sum()
+            correct = pred.eq(gold.data).masked_select(gold.ne(Constants.PAD).data).float().sum()
 
             loss.backward()
             if clip > 0:
@@ -401,7 +424,7 @@ def main():
         d_acc, d_p, d_r, d_f, d_preds = evaluate(dev_X, dev_Y)
         t_acc, t_p, t_r, t_f, t_preds = evaluate(test_X, test_Y)
         
-        print("Epoch {} of {} took {:.4f}s, learning rate: {:.6f}, training loss: {:.4f}, training accuracy: {:.4f}".format(epoch, num_epoch, time.time() - start_time, lr, total_loss/train_batches, total_correct * 100.0/total_words))
+        print("Epoch {} of {} took {:.4f}s, learning rate: {:.6f}, training loss: {:.4f}, training accuracy: {:.4f}".format(epoch, num_epoch, time.time() - start_time, lr, total_loss/train_batches, total_correct.float() * 100.0/total_words))
 
         if d_f > best_dev:
             best_dev = d_f
