@@ -424,7 +424,7 @@ def main():
         d_acc, d_p, d_r, d_f, d_preds = evaluate(dev_X, dev_Y)
         t_acc, t_p, t_r, t_f, t_preds = evaluate(test_X, test_Y)
         
-        print("Epoch {} of {} took {:.4f}s, learning rate: {:.6f}, training loss: {:.4f}, training accuracy: {:.4f}".format(epoch, num_epoch, time.time() - start_time, lr, total_loss/train_batches, total_correct.float() * 100.0/total_words))
+        print("Epoch {} of {} took {:.4f}s, learning rate: {:.6f}, training loss: {:.4f}, training accuracy: {:.4f}".format(epoch, num_epoch, time.time() - start_time, lr, total_loss/train_batches, total_correct * 100.0/total_words))
 
         if d_f > best_dev:
             best_dev = d_f
