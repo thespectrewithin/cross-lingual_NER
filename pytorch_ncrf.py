@@ -60,7 +60,7 @@ class lstmcrf(nn.Module):
         if pretrained is not None:
             self.word_embed.weight.data.copy_(torch.from_numpy(pretrained))
 
-        self.reset_parameters()
+        #self.reset_parameters()
 
     def forward(self, words, chars, word_length, char_length, target):
 
