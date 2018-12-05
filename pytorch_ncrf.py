@@ -29,9 +29,10 @@ class lstmcrf(nn.Module):
         self.char_embed = nn.Embedding(n_cvocab, cembed_size, padding_idx=Constants.PAD)
         
         self.char_lstm = nn.LSTM(cembed_size, chidden_size, batch_first=True, bidirectional=True)
-        self.word_lstm = nn.LSTM(2*chidden_size + wembed_size, whidden_size, batch_first=True, bidirectional=True, dropout=word_dropout)
+        self.word_lstm = nn.LSTM(2*chidden_size + wembed_size, whidden_size, batch_first=True, bidirectional=True)
 
         self.emb_dropout = nn.Dropout(emb_dropout)
+        self.word_dropout = nn.Dropout(word_dropout)
         self.chidden_size = chidden_size
 
         self.use_crf = use_crf
@@ -102,6 +103,9 @@ class lstmcrf(nn.Module):
         word_packed_output, _ = self.word_lstm(word_packed_input)
         word_output, _ = pad_packed_sequence(word_packed_output, batch_first=True)
         word_output = word_output[torch.from_numpy(np.argsort(word_idx.cpu().data.numpy())).cuda()]
+        
+        if self.word_dropout.p > 0.0:
+                word_output = self.word_dropout(word_output)
 
         if self.self_att:
 
