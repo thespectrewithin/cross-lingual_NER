@@ -84,14 +84,14 @@ def load_data(path, label_index, isIOB2):
             sentence.append(line.strip().split()[0])
             label.append(line.strip().split()[label_index])
         else:
-            if len(sentence) > 1:
+            if len(sentence) > 0:
                 sentences.append(sentence)
                 if not isIOB2:
                     iob2(label)
                 labels.append(label)
                 sentence = []
                 label = []
-    if len(sentence) > 1:
+    if len(sentence) > 0:
         sentences.append(sentence)
         labels.append(label)
     return sentences, labels
